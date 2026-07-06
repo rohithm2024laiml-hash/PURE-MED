@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PURE MED - Traditional Tamil Natural Medicine & Remedies (Paatti Vaithiyam)</title>
+    <meta name="description" content="Discover natural medicines and home remedies followed by Tamilians to cure common diseases. Explore Siddha and Paatti Vaithiyam remedies using our natural remedy finder.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="light-mode">
+    <!-- Background Organic Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo" id="logo-link">
+                <span class="logo-icon">🌿</span>
+                <span class="logo-text">PURE <span class="logo-accent">MED</span></span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                <i data-lucide="menu" class="menu-icon"></i>
+                <i data-lucide="x" class="close-icon"></i>
+            </button>
+
+            <nav class="nav" id="main-nav">
+                <button class="nav-link active" data-tab="remedies-explorer" id="tab-explorer-btn">
+                    <i data-lucide="search"></i> <span data-translate="nav_explorer">Explorer</span>
+                </button>
+                <button class="nav-link" data-tab="symptom-finder" id="tab-finder-btn">
+                    <i data-lucide="activity"></i> <span data-translate="nav_symptom">Symptom Checker</span>
+                </button>
+                <button class="nav-link" data-tab="herbs-encyclopedia" id="tab-herbs-btn">
+                    <i data-lucide="book-open"></i> <span data-translate="nav_herbs">Herbs Guide</span>
+                </button>
+                <button class="nav-link" data-tab="bookmarks-section" id="tab-bookmarks-btn">
+                    <i data-lucide="bookmark"></i> <span data-translate="nav_saved">Saved</span> (<span id="bookmark-count">0</span>)
+                </button>
+            </nav>
+
+            <div class="header-actions">
+                <!-- Language Selector -->
+                <div class="language-selector" id="language-selector-container">
+                    <button class="lang-btn active" data-lang="en" id="lang-btn-en">EN</button>
+                    <button class="lang-btn" data-lang="ta" id="lang-btn-ta">தமிழ்</button>
+                </div>
+                
+                <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle dark mode">
+                    <i data-lucide="moon" class="moon-icon"></i>
+                    <i data-lucide="sun" class="sun-icon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Explorer Section (Active by Default) -->
+        <section id="remedies-explorer" class="tab-panel active">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="container hero-container">
+                    <div class="hero-badge" data-translate="hero_badge">🌿 Traditional Tamil Healing & Siddha Remedies</div>
+                    <h1 data-translate="hero_title">Natural Healing, Powered by Ancient Wisdom</h1>
+                    <p class="hero-desc" data-translate="hero_desc">Discover over 140+ traditional remedies (*Paatti Vaithiyam*) followed by Tamilians to heal diseases naturally using everyday kitchen herbs and spices.</p>
+
+                    <!-- Hero Stats -->
+                    <div class="hero-stats" id="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="stat-remedies-count">140+</span>
+                            <span class="stat-label" data-translate="stat_remedies">Remedies</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="stat-herbs-count">20+</span>
+                            <span class="stat-label" data-translate="stat_herbs">Medicinal Herbs</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number">2</span>
+                            <span class="stat-label" data-translate="stat_languages">Languages</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Bar Container -->
+                    <div class="search-wrapper">
+                        <div class="search-box">
+                            <i data-lucide="search" class="search-icon"></i>
+                            <input type="text" id="disease-search-input" placeholder="Search by disease (e.g. Cough, Migraine, Ulcer, Allergy) or ingredients..." autocomplete="off">
+                            <button class="clear-btn" id="search-clear-btn" aria-label="Clear search">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+                        <!-- Autocomplete Suggestions -->
+                        <div class="search-suggestions" id="search-suggestions-dropdown">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Quick Search Chips -->
+                    <div class="quick-search" id="quick-search-chips">
+                        <span class="quick-search-label" data-translate="quick_search_label">Popular:</span>
+                        <div class="quick-chips" id="quick-chips-container">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Section -->
+            <div class="container category-section">
+                <h2 class="section-title" data-translate="cat_title">Explore by Category</h2>
+                <div class="category-grid" id="category-filter-container">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Remedies Grid Section -->
+            <div class="container remedies-section">
+                <div class="results-header">
+                    <h3 id="results-title" data-translate="results_title">All Remedies</h3>
+                    <span class="results-count" id="results-count-badge">0 remedies found</span>
+                </div>
+                
+                <div class="remedies-grid" id="remedies-grid-container">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Symptom Checker Section -->
+        <section id="symptom-finder" class="tab-panel">
+            <div class="container container-narrow">
+                <div class="wizard-header text-center">
+                    <div class="hero-badge" data-translate="wizard_badge">🧠 Interactive Finder</div>
+                    <h2 data-translate="wizard_title">Symptom Remedy Checker</h2>
+                    <p data-translate="wizard_desc">Tell us what you are feeling, and we will match you with the best traditional Tamil home remedies.</p>
+                </div>
+
+                <div class="wizard-card glass-card">
+                    <!-- Wizard Progress Bar -->
+                    <div class="wizard-progress" id="wizard-progress">
+                        <div class="progress-step active" data-step="1">
+                            <span class="progress-dot">1</span>
+                            <span class="progress-label" data-translate="progress_area">Area</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="2">
+                            <span class="progress-dot">2</span>
+                            <span class="progress-label" data-translate="progress_symptoms">Symptoms</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="3">
+                            <span class="progress-dot">3</span>
+                            <span class="progress-label" data-translate="progress_results">Results</span>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Select Category -->
+                    <div class="wizard-step active" id="step-1">
+                        <div class="step-num" data-translate="wizard_step_1_of_3">Step 1 of 3</div>
+                        <h3 class="step-title" data-translate="wizard_step1_title">Select the affected system/area</h3>
+                        
+                        <div class="system-options-grid">
+                            <label class="system-option">
+                                <input type="radio" name="system-select" value="respiratory">
+                                <span class="system-option-content">
+                                    <span class="system-icon">🫁</span>
+                                    <span class="system-name" data-translate="sys_respiratory_title">Cold, Cough & Breathing</span>
+                                    <span class="system-desc" data-translate="sys_respiratory_desc">Issues related to lungs, chest, throat, nose, and fever.</span>
+                                </span>
+                            </label>
+                            
+                            <label class="system-option">
+                                <input type="radio" name="system-select" value="digestion">
+                                <span class="system-option-content">
+                                    <span class="system-icon">🥣</span>
+                                    <span class="system-name" data-translate="sys_digestion_title">Digestion & Stomach</span>
+                                    <span class="system-desc" data-translate="sys_digestion_desc">Stomach aches, nausea, acidity, ulcers, or digestive complaints.</span>
+                                </span>
+                            </label>
+
+                            <label class="system-option">
+                                <input type="radio" name="system-select" value="pain_relief">
+                                <span class="system-option-content">
+                                    <span class="system-icon">🩹</span>
+                                    <span class="system-name" data-translate="sys_pain_title">Pain & Inflammation</span>
+                                    <span class="system-desc" data-translate="sys_pain_desc">Headaches, joint pain, muscle strain, or toothache.</span>
+                                </span>
+                            </label>
+
+                            <label class="system-option">
+                                <input type="radio" name="system-select" value="skin_hair">
+                                <span class="system-option-content">
+                                    <span class="system-icon">🌿</span>
+                                    <span class="system-name" data-translate="sys_skin_title">Skin & Hair Care</span>
+                                    <span class="system-desc" data-translate="sys_skin_desc">Acne, hair fall, dandruff, allergies, or minor cuts.</span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="step-actions">
+                            <div></div> <!-- spacing -->
+                            <button class="btn btn-primary" id="wizard-to-step-2" disabled>
+                                <span data-translate="btn_next">Next Step</span> <i data-lucide="arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Select Specific Symptoms -->
+                    <div class="wizard-step" id="step-2">
+                        <div class="step-num" data-translate="wizard_step_2_of_3">Step 2 of 3</div>
+                        <h3 class="step-title" id="symptoms-title-text" data-translate="wizard_step2_title">Select your specific symptoms</h3>
+                        <p class="step-subtitle" data-translate="wizard_step2_desc">You can select multiple symptoms below:</p>
+                        
+                        <div class="symptoms-checkbox-grid" id="symptoms-selection-container">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+
+                        <div class="step-actions">
+                            <button class="btn btn-secondary" id="wizard-back-to-step-1">
+                                <i data-lucide="arrow-left"></i> <span data-translate="btn_back">Back</span>
+                            </button>
+                            <button class="btn btn-primary" id="wizard-to-step-3" disabled>
+                                <span data-translate="btn_find">Find Remedy</span> <i data-lucide="sparkles"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: View Matches -->
+                    <div class="wizard-step" id="step-3">
+                        <div class="step-num" data-translate="wizard_step_3_of_3">Step 3 of 3</div>
+                        <h3 class="step-title" data-translate="wizard_step3_title">Suggested Remedies for You</h3>
+                        
+                        <div class="matched-remedies" id="matched-remedies-container">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+
+                        <div class="step-actions">
+                            <button class="btn btn-secondary" id="wizard-restart">
+                                <i data-lucide="refresh-cw"></i> <span data-translate="btn_restart">Start Over</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Herbs Encyclopedia Section -->
+        <section id="herbs-encyclopedia" class="tab-panel">
+            <div class="container">
+                <div class="section-intro text-center">
+                    <div class="hero-badge" data-translate="herbs_badge">📚 Herb Library</div>
+                    <h2 data-translate="herbs_title">Tamil Medicinal Herbs Encyclopedia</h2>
+                    <p data-translate="herbs_desc">Learn about the primary herbs used in Tamil traditional medicines, their botanical properties, and how to consume them.</p>
+                </div>
+                
+                <div class="herbs-grid" id="herbs-grid-container">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Bookmarks Section -->
+        <section id="bookmarks-section" class="tab-panel">
+            <div class="container">
+                <div class="section-intro text-center">
+                    <div class="hero-badge" data-translate="saved_badge">🔖 Bookmarks</div>
+                    <h2 data-translate="saved_title">Your Saved Remedies</h2>
+                    <p data-translate="saved_desc">Access your bookmarked natural remedies instantly, saved for offline lookup.</p>
+                </div>
+                
+                <div class="bookmarks-wrapper">
+                    <div class="remedies-grid" id="bookmarks-grid-container">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                    <div class="empty-state" id="bookmarks-empty-state">
+                        <span class="empty-icon">📂</span>
+                        <h3 data-translate="saved_empty_title">No Bookmarks Saved Yet</h3>
+                        <p data-translate="saved_empty_desc">Browse the remedies and click the bookmark button on any remedy card to save it here.</p>
+                        <button class="btn btn-primary" id="bookmarks-explore-btn" data-translate="btn_browse">
+                            Browse Remedies
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Remedy Detail Modal Overlay -->
+    <div class="modal-overlay" id="remedy-detail-modal" aria-hidden="true" role="dialog">
+        <div class="modal-content glass-card">
+            <button class="modal-close" id="modal-close-btn" aria-label="Close modal">
+                <i data-lucide="x"></i>
+            </button>
+            
+            <div class="modal-header-section">
+                <div class="modal-badge" id="modal-disease-badge">Cold</div>
+                <h2 id="modal-remedy-name">Tulsi Ginger Kashayam</h2>
+                <div class="modal-tamil-name" id="modal-tamil-name">துளசி இஞ்சி கஷாயம்</div>
+            </div>
+
+            <!-- Modal Navigation Tabs -->
+            <div class="modal-tabs">
+                <button class="modal-tab-btn active" data-modal-tab="modal-tab-details" id="m-tab-details-btn" data-translate="m_tab_details">Details & Info</button>
+                <button class="modal-tab-btn" data-modal-tab="modal-tab-prep" id="m-tab-prep-btn" data-translate="m_tab_prep">How to Prepare</button>
+                <button class="modal-tab-btn" data-modal-tab="modal-tab-safety" id="m-tab-safety-btn" data-translate="m_tab_safety">Usage & Safety</button>
+            </div>
+
+            <div class="modal-body-content">
+                <!-- Tab: Details & Info -->
+                <div class="modal-tab-panel active" id="modal-tab-details">
+                    <div class="modal-info-block">
+                        <h3 data-translate="m_ingredients_title"><i data-lucide="list"></i> Key Ingredients</h3>
+                        <ul class="modal-ingredients-list" id="modal-ingredients-list-container">
+                            <!-- Populated via JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tab: Preparation -->
+                <div class="modal-tab-panel" id="modal-tab-prep">
+                    <div class="modal-info-block">
+                        <h3 data-translate="m_prep_title"><i data-lucide="chef-hat"></i> Preparation Guide</h3>
+                        <p class="modal-text-desc" id="modal-preparation-text">Boil ingredients in water for 10 minutes.</p>
+                    </div>
+                </div>
+
+                <!-- Tab: Safety & Dosage -->
+                <div class="modal-tab-panel" id="modal-tab-safety">
+                    <div class="modal-info-block dosage-block">
+                        <h3 data-translate="m_usage_title"><i data-lucide="clock"></i> Suggested Usage</h3>
+                        <p class="modal-text-desc" id="modal-usage-text">Drink twice daily.</p>
+                    </div>
+                    <div class="modal-info-block precaution-block">
+                        <h3 data-translate="m_safety_title"><i data-lucide="alert-triangle"></i> Precautions & Safety</h3>
+                        <p class="modal-text-desc" id="modal-precautions-text">Avoid excess for children.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer-actions">
+                <button class="btn btn-secondary" id="modal-bookmark-toggle-btn">
+                    <i data-lucide="bookmark"></i> <span id="modal-bookmark-btn-text" data-translate="btn_save_remedy">Save Remedy</span>
+                </button>
+                <button class="btn btn-primary" id="modal-close-action-btn" data-translate="btn_close_remedy">Close Remedy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="footer-main">
+        <div class="container footer-container">
+            <p class="footer-logo">🌿 PURE <span class="logo-accent">MED</span></p>
+            <p class="footer-copy" id="footer-copy-text" data-translate="footer_copy">&copy; 2026 PURE MED. Built as a repository of Tamil Traditional Medicine Wisdom.</p>
+            <p class="footer-disclaimer" id="footer-disclaimer-text" data-translate="footer_disclaimer"><strong>Disclaimer:</strong> The remedies and information listed in this application are traditional Tamil home remedies (Paatti Vaithiyam). They are intended for educational and general wellness support, and should NOT be considered professional medical advice. Always consult a qualified physician or Siddha doctor for severe illness or persistent symptoms.</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
+        <i data-lucide="arrow-up"></i>
+    </button>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+    <!-- Script references -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
